@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viresh Kumar - Certifications Archive</title>
+
+    <script>
+        (function () {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap">
+
+    <style>
+        :root {
+            --bg-color: #1a1612;
+            --paper-color: #d8cbb3;
+            --paper-dark: #b8a988;
+            --ink-color: #2b1d14;
+            --crimson: #8b0000;
+            --crimson-bright: #c43d3d;
+            --string-color: #c43d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body.light-mode {
+            --bg-color: #f5f2eb;
+            --paper-color: #ffffff;
+            --paper-dark: #d7d0c2;
+            --ink-color: #1f1f1f;
+            --crimson: #8b0000;
+            --crimson-bright: #c43d3d;
+            --string-color: #c43d3d;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1612;
+            --paper-color: #d8cbb3;
+            --paper-dark: #b8a988;
+            --ink-color: #2b1d14;
+            --crimson: #8b0000;
+            --crimson-bright: #c43d3d;
+            --string-color: #c43d3d;
+        }
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            background-color: var(--bg-color);
+            color: var(--paper-color);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        #cursor-lens {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 90px;
+            height: 90px;
+            border: 2px solid rgba(216, 203, 179, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            will-change: transform;
+            background: rgba(196, 61, 61, 0.03);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #cursor-lens::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--crimson-bright);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        #cursor-lens::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+            background-image: linear-gradient(var(--crimson-bright), var(--crimson-bright)), linear-gradient(var(--crimson-bright), var(--crimson-bright));
+            background-size: 1px 100%, 100% 1px;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+        }
+
+        #cursor-lens.hovering {
+            width: 120px;
+            height: 120px;
+            border-color: var(--crimson-bright);
+            background: rgba(196, 61, 61, 0.08);
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 40%, var(--bg-color) 100%);
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .paper {
+            background-color: var(--paper-color);
+            color: var(--ink-color);
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Special Elite', monospace;
+            font-weight: normal;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--ink-color);
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .hero {
+            text-align: center;
+            border: 4px double var(--ink-color);
+            padding: 60px 40px;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 3px solid var(--crimson);
+            color: var(--crimson);
+            padding: 10px 20px;
+            font-family: 'Special Elite';
+            font-size: 1.5rem;
+            transform: rotate(15deg);
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            border-right: 2px solid var(--ink-color);
+            animation: blink 0.7s step-end infinite;
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: var(--ink-color);
+            }
+        }
+
+        .evidence-board {
+            background-color: #2b2018;
+            border: 10px solid #3e2c1e;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            position: relative;
+        }
+
+        .evidence-card {
+            background: #f0e6d2;
+            padding: 15px;
+            color: #000;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .evidence-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .evidence-card:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 5;
+        }
+
+        .pin {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background: var(--crimson-bright);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .red-string {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: var(--string-color);
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .accusation-area {
+            text-align: center;
+        }
+
+        .btn {
+            background: var(--ink-color);
+            color: var(--paper-color);
+            padding: 15px 30px;
+            font-family: 'Special Elite';
+            font-size: 1.2rem;
+            border: none;
+            cursor: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+            margin: 20px 0;
+        }
+
+        .btn:hover {
+            background: var(--crimson);
+        }
+
+        input[type="text"],
+input[type="email"],
+textarea {
+    background: var(--paper-color) !important; /* Box ka background paper color hoga */
+    border: 1px dashed var(--ink-color) !important;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    color: var(--ink-color) !important; /* Text hamesha background ke ulti theme ka dikhega */
+    font-family: 'Courier Prime';
+    font-size: 1rem;
+    cursor: none;
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--ink-color);
+    opacity: 0.6;
+}
+
+        .section-note {
+            font-size: 0.95rem;
+            opacity: 0.75;
+            margin-top: -8px;
+            margin-bottom: 20px;
+        }
+
+        .timeline {
+            border-top: 2px dashed var(--ink-color);
+            margin-top: 10px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px dashed rgba(43, 29, 20, 0.35);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--crimson);
+            font-size: 0.95rem;
+        }
+
+        .timeline-body h3 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+
+        .timeline-body p {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .ledger {
+            border: 2px solid rgba(43, 29, 20, 0.35);
+            margin-top: 12px;
+        }
+
+        .ledger-row {
+            display: grid;
+            grid-template-columns: 90px 1fr 220px;
+            gap: 15px;
+            padding: 12px 14px;
+            border-bottom: 1px dashed rgba(43, 29, 20, 0.35);
+            align-items: baseline;
+        }
+
+        .ledger-row:last-child {
+            border-bottom: none;
+        }
+
+        .ledger-id {
+            font-weight: bold;
+            color: var(--crimson);
+            font-size: 0.88rem;
+        }
+
+        .ledger-org {
+            font-size: 0.86rem;
+            opacity: 0.8;
+            text-align: right;
+        }
+
+        .link-strip {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .doc-link {
+            display: inline-block;
+            border: 1px solid var(--ink-color);
+            color: var(--ink-color);
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-link:hover {
+            background: var(--ink-color);
+            color: var(--paper-color);
+        }
+
+        .form-status {
+            min-height: 1.2em;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .back-home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 99999;
+            background: var(--paper-color);
+            color: var(--ink-color);
+            border: none;
+            padding: 12px 16px;
+            font-family: 'Special Elite';
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .25);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: var(--paper-color);
+            color: var(--ink-color);
+            font-size: 22px;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .25);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 90%;
+            height: 90%;
+            object-fit: contain;
+            padding-top: 5%;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s ease;
+            font-family: 'Special Elite', monospace;
+            background: transparent;
+            border: none;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .typewriter-text {
+                font-size: 1.1rem;
+            }
+
+            body,
+            .btn,
+            input,
+            textarea {
+                cursor: auto;
+            }
+
+            #cursor-lens {
+                display: none;
+            }
+
+            .timeline-item,
+            .ledger-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ledger-org {
+                text-align: left;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+
+            .paper {
+                padding: 24px;
+            }
+
+            .back-home-btn {
+                top: 12px;
+                left: 12px;
+            }
+
+            .theme-toggle {
+                top: 12px;
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="back-home-btn" href="index.html" aria-label="Back to home">Back to Home</a>
+    <button id="themeToggle" class="theme-toggle">🌙</button>
+
+    <div id="cursor-lens"></div>
+    <div class="vignette"></div>
+
+    <div class="container">
+        <div class="paper hero">
+            <div class="stamp">Case File<br>Classified</div>
+            <h1>Certifications</h1>
+            <div class="typewriter-text" id="typewriter">Professional archive and verified records</div>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">
+                Certifications, simulations, and training artifacts compiled for review.
+            </p>
+        </div>
+
+        <div class="paper">
+            <h2>Archive Profile</h2>
+            <p>This archive contains verified learning records, simulation-based assessments, and practical training
+                artifacts that support the broader portfolio. Each item reflects applied learning in web design, AI
+                tools, data analysis, and software development workflows.</p>
+            <p>Use the exhibit board below to inspect each certificate. The archive is organized to keep the dossier
+                style consistent with the main portfolio while exposing the certifications in a clean, readable way.</p>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 20px; color: var(--crimson-bright);">The Evidence Board</h2>
+        <div class="evidence-board">
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A1</h3>
+                <p style="font-size: 0.9rem;">Responsive Web Design</p>
+                <button class="btn view-btn" type="button"
+                    data-image="FREECODECAMP.png">View
+                    Certificate</button>
+            </div>
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A2</h3>
+                <p style="font-size: 0.9rem;">AWS APAC — Solutions Architecture Job Simulation</p>
+                <button class="btn view-btn" type="button"
+                    data-image="AWS Forage.jpeg">View
+                    Certificate</button>
+            </div>
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A3</h3>
+                <p style="font-size: 0.9rem;">Deloitte Australia — Data Analytics Job Simulation</p>
+                <button class="btn view-btn" type="button"
+                    data-image="Deloitte Data Analytics.jpeg">View
+                    Certificate</button>
+            </div>
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A4</h3>
+                <p style="font-size: 0.9rem;">Introduction to Generative AI Studio</p>
+                <button class="btn view-btn" type="button"
+                    data-image="Google Cloud X Simplilearn Gen AI.png">View
+                    Certificate</button>
+            </div>
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A5</h3>
+                <p style="font-size: 0.9rem;">Website UI/UX Designing using ChatGPT</p>
+                <button class="btn view-btn" type="button"
+                    data-image="Simplilearn UI.png">View
+                    Certificate</button>
+            </div>
+            <div class="evidence-card">
+                <div class="pin"></div>
+                <div class="red-string"></div>
+                <h3>Certification A6</h3>
+                <p style="font-size: 0.9rem;">C Programming Workshop</p>
+                <button class="btn view-btn" type="button"
+                    data-image="Ducat C.png">View
+                    Certificate</button>
+            </div>
+        </div>
+
+        <div class="paper" style="margin-top: 40px;">
+            <h2>Timeline Notes</h2>
+            <p class="section-note">Training milestones and learning sessions connected to the certification record.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026</div>
+                    <div class="timeline-body">
+                        <h3>Web Design and AI Workflow Focus</h3>
+                        <p>Hands-on learning in responsive layouts, AI-supported design workflows, and practical prompt
+                            experimentation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025-2026</div>
+                    <div class="timeline-body">
+                        <h3>Simulation-Based Certifications</h3>
+                        <p>Completed job simulations and technical workshops that reinforced applied problem solving and
+                            professional workflow habits.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="paper">
+            <h2>Certification Ledger</h2>
+            <p class="section-note">Quick index of the archive contents.</p>
+            <div class="ledger">
+                <div class="ledger-row">
+                    <div class="ledger-id">A1</div>
+                    <div>Responsive Web Design</div>
+                    <div class="ledger-org">FreeCodeCamp</div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-id">A2</div>
+                    <div>AWS APAC — Solutions Architecture Job Simulation</div>
+                    <div class="ledger-org">Forage</div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-id">A3</div>
+                    <div>Deloitte Australia — Data Analytics Job Simulation</div>
+                    <div class="ledger-org">Forage</div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-id">A4</div>
+                    <div>Introduction to Generative AI Studio</div>
+                    <div class="ledger-org">Simplilearn & Google Cloud</div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-id">A5</div>
+                    <div>Website UI/UX Designing using ChatGPT</div>
+                    <div class="ledger-org">Simplilearn</div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-id">A6</div>
+                    <div>C Programming Workshop</div>
+                    <div class="ledger-org">DUCAT</div>
+                </div>
+            </div>
+            <div class="link-strip">
+                <a class="doc-link" href="index.html">Back to Home</a>
+            </div>
+        </div>
+
+        <div class="paper accusation-area" style="margin-top: 40px; border-color: var(--crimson);">
+            <h2>Request Access</h2>
+            <p>If you need a copy of any certificate or want to verify a training record, leave a note below.</p>
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="6cb771ec-80ec-4d7e-a91e-e31ee4d983fb">
+                <input type="hidden" name="subject" value="New request from certification archive">
+                <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+                <input type="text" name="name" placeholder="Your Name (Alias)" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <textarea name="message" rows="4" placeholder="Which certificate do you need?" required></textarea>
+                <button type="submit" class="btn">Send Request</button>
+                <div id="form-status" class="form-status" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <button class="close-modal" id="close-modal" type="button" onclick="closeModal()">x</button>
+        <img class="modal-content" id="modalImage" alt="Certification preview">
+    </div>
+
+    <script>
+        const lens = document.getElementById('cursor-lens');
+        let mouseX = 0;
+        let mouseY = 0;
+        let lensX = 0;
+        let lensY = 0;
+        const speed = 0.15;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            const distX = mouseX - lensX;
+            const distY = mouseY - lensY;
+            lensX += distX * speed;
+            lensY += distY * speed;
+            lens.style.transform = `translate3d(${lensX}px, ${lensY}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        const interactives = document.querySelectorAll('a, button, input, textarea, .evidence-card, .doc-link, .view-btn');
+        interactives.forEach(item => {
+            item.addEventListener('mouseenter', () => lens.classList.add('hovering'));
+            item.addEventListener('mouseleave', () => lens.classList.remove('hovering'));
+        });
+
+        const phrases = [
+            'Professional archive and verified records.',
+            'Training, simulations, and practical learning.',
+            'Certificates linked to real project work.'
+        ];
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeLoop() {
+            const phrase = phrases[currentPhrase];
+            if (!isDeleting && currentChar < phrase.length) {
+                typewriterElement.textContent = phrase.substring(0, currentChar + 1);
+                currentChar++;
+                setTimeout(typeLoop, 80);
+            } else if (isDeleting && currentChar > 0) {
+                typewriterElement.textContent = phrase.substring(0, currentChar - 1);
+                currentChar--;
+                setTimeout(typeLoop, 45);
+            } else {
+                if (!isDeleting) {
+                    isDeleting = true;
+                    setTimeout(typeLoop, 1400);
+                } else {
+                    isDeleting = false;
+                    currentPhrase = (currentPhrase + 1) % phrases.length;
+                    setTimeout(typeLoop, 450);
+                }
+            }
+        }
+
+        window.onload = typeLoop;
+
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.classList.add(savedTheme + '-mode');
+        themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        themeToggle.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModalBtn = document.getElementById('close-modal');
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        function openModal(imageSrc) {
+            modal.style.display = 'block';
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.querySelectorAll('.view-btn').forEach((button) => {
+            button.addEventListener('click', () => openModal(button.dataset.image));
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        if (contactForm && formStatus) {
+            contactForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const defaultLabel = submitBtn.textContent;
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                formStatus.textContent = '';
+
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        formStatus.textContent = 'Request sent. I will reply soon.';
+                        contactForm.reset();
+                    } else {
+                        formStatus.textContent = data.message || 'Unable to send the request right now.';
+                    }
+                } catch (error) {
+                    formStatus.textContent = 'Network issue. Please try again in a moment.';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = defaultLabel;
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>
